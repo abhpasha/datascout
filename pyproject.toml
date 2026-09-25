@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "datascout"
+version = "0.1.0"
+description = "Zero-config data quality checks for CSV, Parquet, JSON and Excel files, with suggested fixes."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "YOUR NAME" }]
+requires-python = ">=3.9"
+dependencies = ["pandas>=1.5"]
+keywords = ["data quality", "data profiling", "data engineering", "pandas", "etl"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Topic :: Scientific/Engineering :: Information Analysis",
+]
+
+[project.optional-dependencies]
+parquet = ["pyarrow"]
+excel = ["openpyxl"]
+dev = ["pytest", "pyarrow", "openpyxl", "ruff"]
+
+[project.scripts]
+datascout = "datascout.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/YOUR-USERNAME/datascout"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 120

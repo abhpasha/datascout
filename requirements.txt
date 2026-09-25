@@ -1,0 +1,3 @@
+pandas>=1.5
+pyarrow        # optional: Parquet support
+openpyxl       # optional: Excel support

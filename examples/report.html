@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>datascout: messy_customers.csv</title>
+<style>
+:root { --ink:#18263B; --muted:#5B6878; --paper:#FFFFFF; --field:#F2F4F7; --line:#DDE2E8;
+        --high:#B8322A; --medium:#A86B12; --low:#3A68A0; }
+@media (prefers-color-scheme: dark) {
+  :root { --ink:#E6EAF0; --muted:#9AA6B5; --paper:#131A24; --field:#1C2531; --line:#2C3746;
+          --high:#F07068; --medium:#E3A64A; --low:#7EA9DB; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--paper); color:var(--ink);
+       font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+main { max-width:1080px; margin:0 auto; padding:40px 24px 64px; }
+h1 { font-size:1.7rem; margin:0 0 4px; letter-spacing:-.01em; }
+h2 { font-size:1.15rem; margin:40px 0 12px; }
+.meta { color:var(--muted); margin:0 0 28px; }
+.mono { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.9em; }
+.score { display:grid; grid-template-columns:auto 1fr; gap:28px; align-items:center;
+         background:var(--field); border-radius:10px; padding:22px 26px; }
+.score b { font-size:3rem; line-height:1; }
+.score b small { font-size:1rem; color:var(--muted); font-weight:500; }
+.stack { display:flex; height:10px; border-radius:5px; overflow:hidden; background:var(--line); margin:10px 0 8px; }
+.seg-high { background:var(--high); } .seg-medium { background:var(--medium); } .seg-low { background:var(--low); }
+.legend span { margin-right:18px; color:var(--muted); }
+.legend i { display:inline-block; width:9px; height:9px; border-radius:2px; margin-right:6px; }
+dl { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1px; background:var(--line);
+     border:1px solid var(--line); border-radius:10px; overflow:hidden; margin:20px 0 0; }
+dl div { background:var(--paper); padding:14px 18px; }
+dt { color:var(--muted); font-size:.85rem; } dd { margin:2px 0 0; font-size:1.25rem; font-weight:600; }
+.scroll { overflow-x:auto; border:1px solid var(--line); border-radius:10px; }
+table { width:100%; border-collapse:collapse; }
+th, td { text-align:left; padding:10px 14px; border-bottom:1px solid var(--line); vertical-align:top; }
+th { font-size:.85rem; color:var(--muted); font-weight:600; background:var(--field); }
+tr:last-child td { border-bottom:0; }
+.pill { font-size:.8rem; font-weight:600; padding:2px 8px; border-radius:999px; border:1px solid currentColor; }
+.sev-high .pill { color:var(--high); } .sev-medium .pill { color:var(--medium); } .sev-low .pill { color:var(--low); }
+.fix { color:var(--muted); }
+.num { text-align:right; font-variant-numeric:tabular-nums; }
+.bar { display:inline-block; width:80px; height:6px; background:var(--line); border-radius:3px; margin-right:8px; vertical-align:middle; }
+.bar span { display:block; height:100%; background:var(--medium); border-radius:3px; }
+.sample { color:var(--muted); max-width:320px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.empty { color:var(--muted); padding:24px; }
+footer { margin-top:48px; color:var(--muted); font-size:.85rem; }
+@media (max-width:600px) { .score { grid-template-columns:1fr; } }
+</style></head><body><main>
+<h1>Data quality report</h1>
+<p class="meta"><span class="mono">messy_customers.csv</span>, generated 2026-09-25 22:00 UTC</p>
+
+<section class="score">
+  <b>36<small>/100</small></b>
+  <div><strong>Poor</strong>: 11 issue(s) found
+    <div class="stack"><span class='seg-high' style='flex:0.18181818181818182'></span><span class='seg-medium' style='flex:0.36363636363636365'></span><span class='seg-low' style='flex:0.45454545454545453'></span></div>
+    <div class="legend"><span><i style="background:var(--high)"></i>2 high</span>
+      <span><i style="background:var(--medium)"></i>4 medium</span>
+      <span><i style="background:var(--low)"></i>5 low</span></div></div>
+</section>
+
+<dl>
+  <div><dt>Rows</dt><dd>508</dd></div>
+  <div><dt>Columns</dt><dd>9</dd></div>
+  <div><dt>Duplicate rows</dt><dd>8</dd></div>
+  <div><dt>Missing cells</dt><dd>469</dd></div>
+  <div><dt>Memory</dt><dd>0.171 MB</dd></div>
+</dl>
+
+<h2>Issues and suggested fixes</h2>
+<div class="scroll"><table><thead><tr><th>Severity</th><th>Column</th><th>Issue</th><th>Suggested fix</th></tr></thead>
+<tbody><tr class='sev-high'><td><span class='pill'>high</span></td><td>customer_id</td><td>Looks like a key column but has 10 duplicated value(s)</td><td class='fix'>Investigate before joining; duplicate keys multiply rows.</td></tr><tr class='sev-high'><td><span class='pill'>high</span></td><td>referral_code</td><td>84.3% of values are missing</td><td class='fix'>Consider dropping, or check why the source stops populating it.</td></tr><tr class='sev-medium'><td><span class='pill'>medium</span></td><td>(whole table)</td><td>8 fully duplicated rows (1.6%)</td><td class='fix'>Use df.drop_duplicates() or add a unique key constraint upstream.</td></tr><tr class='sev-medium'><td><span class='pill'>medium</span></td><td>annual_spend</td><td>100% of values look numeric but column is stored as text</td><td class='fix'>Strip symbols and cast with pd.to_numeric(..., errors=&#x27;coerce&#x27;).</td></tr><tr class='sev-medium'><td><span class='pill'>medium</span></td><td>country</td><td>Same category written differently: [[&#x27;Canada&#x27;, &#x27;canada&#x27;], [&#x27;USA&#x27;, &#x27;usa&#x27;]]</td><td class='fix'>Normalise with .str.strip().str.lower() or a mapping dict.</td></tr><tr class='sev-medium'><td><span class='pill'>medium</span></td><td>email</td><td>Column appears to contain email addresses</td><td class='fix'>Mask, hash or drop before sharing this dataset.</td></tr><tr class='sev-low'><td><span class='pill'>low</span></td><td>age</td><td>8.1% of values are missing</td><td class='fix'>Usually fine; make sure downstream code handles nulls.</td></tr><tr class='sev-low'><td><span class='pill'>low</span></td><td>country</td><td>78 value(s) have leading/trailing spaces</td><td class='fix'>Apply .str.strip(); padded keys silently break joins.</td></tr><tr class='sev-low'><td><span class='pill'>low</span></td><td>orders</td><td>3 extreme outlier(s) outside [-5.00, 16.00], e.g. [480, 950, 1200]</td><td class='fix'>Verify these are real values and not unit or entry errors.</td></tr><tr class='sev-low'><td><span class='pill'>low</span></td><td>plan</td><td>Only one distinct value: &#x27;standard&#x27;</td><td class='fix'>Carries no information for modelling; consider dropping.</td></tr><tr class='sev-low'><td><span class='pill'>low</span></td><td>signup_date</td><td>Values look like dates but column is stored as text</td><td class='fix'>Parse with pd.to_datetime() so you can sort, filter and resample.</td></tr></tbody></table></div>
+
+<h2>Column profiles</h2>
+<div class="scroll"><table><thead><tr><th>Column</th><th>Type</th><th>Missing</th><th class="num">Unique</th><th>Sample values</th></tr></thead>
+<tbody><tr><td class='mono'>customer_id</td><td>numeric</td><td><div class='bar'><span style='width:0.0%'></span></div><small>0.0%</small></td><td class='num'>498</td><td class='sample'>1000, 1001, 1002</td></tr><tr><td class='mono'>email</td><td>text</td><td><div class='bar'><span style='width:0.0%'></span></div><small>0.0%</small></td><td class='num'>500</td><td class='sample'>user0@example.com, user1@example.com, user2@example.com</td></tr><tr><td class='mono'>country</td><td>text</td><td><div class='bar'><span style='width:0.0%'></span></div><small>0.0%</small></td><td class='num'>6</td><td class='sample'>Canada, India, usa </td></tr><tr><td class='mono'>signup_date</td><td>text</td><td><div class='bar'><span style='width:0.0%'></span></div><small>0.0%</small></td><td class='num'>500</td><td class='sample'>2024-01-01, 2024-01-02, 2024-01-03</td></tr><tr><td class='mono'>age</td><td>numeric</td><td><div class='bar'><span style='width:8.07%'></span></div><small>8.07%</small></td><td class='num'>57</td><td class='sample'>24.0, 55.0, 72.0</td></tr><tr><td class='mono'>annual_spend</td><td>text</td><td><div class='bar'><span style='width:0.0%'></span></div><small>0.0%</small></td><td class='num'>500</td><td class='sample'>$1,714.44, $1,013.80, $582.48</td></tr><tr><td class='mono'>orders</td><td>numeric</td><td><div class='bar'><span style='width:0.0%'></span></div><small>0.0%</small></td><td class='num'>19</td><td class='sample'>7, 5, 8</td></tr><tr><td class='mono'>plan</td><td>text</td><td><div class='bar'><span style='width:0.0%'></span></div><small>0.0%</small></td><td class='num'>1</td><td class='sample'>standard</td></tr><tr><td class='mono'>referral_code</td><td>text</td><td><div class='bar'><span style='width:84.25%'></span></div><small>84.25%</small></td><td class='num'>80</td><td class='sample'>REF0, REF1, REF2</td></tr></tbody></table></div>
+
+<footer>Generated by datascout. Scores are heuristic: use them to prioritise, not to certify.</footer>
+</main></body></html>

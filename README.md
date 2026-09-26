@@ -2,7 +2,7 @@
 
 **Find data quality problems in seconds, and get told how to fix them.**
 
-[![CI](https://github.com/YOUR-USERNAME/datascout/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR-USERNAME/datascout/actions/workflows/ci.yml)
+[![CI](https://github.com/abhpasha/datascout/actions/workflows/ci.yml/badge.svg)](https://github.com/abhpasha/datascout/actions/workflows/ci.yml)
 ![Python](https://img.shields.io/badge/python-3.9%2B-blue)
 ![License: MIT](https://img.shields.io/badge/license-MIT-green)
 
@@ -32,7 +32,7 @@ datascout customers.csv --html report.html
 ## Install
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/datascout.git
+git clone https://github.com/abhpasha/datascout.git
 cd datascout
 pip install -e ".[parquet,excel]"
 ```

@@ -8,7 +8,7 @@ version = "0.1.0"
 description = "Zero-config data quality checks for CSV, Parquet, JSON and Excel files, with suggested fixes."
 readme = "README.md"
 license = { text = "MIT" }
-authors = [{ name = "YOUR NAME" }]
+authors = [{ name = "Ahsan Bin Hasan Pasha" }]
 requires-python = ">=3.9"
 dependencies = ["pandas>=1.5"]
 keywords = ["data quality", "data profiling", "data engineering", "pandas", "etl"]
@@ -27,7 +27,7 @@ dev = ["pytest", "pyarrow", "openpyxl", "ruff"]
 datascout = "datascout.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/YOUR-USERNAME/datascout"
+Homepage = "https://github.com/abhpasha/datascout"
 
 [tool.setuptools.packages.find]
 where = ["src"]
